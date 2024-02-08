@@ -6,6 +6,7 @@ class jdbc{
 		int popn;
 		Connection con;
 		PreparedStatement ps;
+		ResultSet rs;
 		Scanner sc=new Scanner(System.in);
 		boolean b=true;
 		try{
@@ -19,21 +20,22 @@ class jdbc{
 				System.out.println("4-> Search ");
 				System.out.println("5-> Veiw all ");
 				System.out.println("6-> Insert ");
-				System.out.print("\n\n1-> Enter Your Choice :  ");
+				System.out.print("\n\n Enter Your Choice :  ");
 				int ch=sc.nextInt();
 				switch(ch){
 					case 1 :	ps=con.prepareStatement("insert into district values(?,?,?);");
 							System.out.print("\n\nENter Name:");
-							name=sc.nextLine();
+							name=sc.next();
 							ps.setString(1,name);
 							System.out.print("\n\nENter area:");
-							area=sc.nextLine();
+							area=sc.next();
 							ps.setString(2,area);
 							System.out.print("\n\nENter population:");
 							popn=sc.nextInt();
 							ps.setInt(3,popn);
 							System.out.println("\nValues Inserted Successfully\n");
 							ps.executeUpdate();
+							break;
 							
 						
 					case 2 :	System.out.print("\nEnter Column(2->Area,3->Population):");
@@ -61,29 +63,33 @@ class jdbc{
 								System.out.println("\nValues Updated Successfully\n");
 								ps.executeUpdate();
 								}
+							break;
 							
 					
 					case 3 :	ps=con.prepareStatement("delete from district where name=?");
 							System.out.print("\n\nENter Name:");
-							name=sc.nextLine();
+							name=sc.next();
 							ps.setString(1,name);
 							ps.executeUpdate();
 							System.out.println("\nValues Deleted Successfully\n");
+							break;
 					
 					case 4 :	ps=con.prepareStatement("select * from district where name=?;");
 							System.out.print("\n\nENter Name:");
-							name=sc.nextLine();
+							name=sc.next();
 							ps.setString(1,name);
-							ResultSet rs=ps.executeQuery();
+							rs=ps.executeQuery();
 							while(rs.next()){
 								System.out.println("\t"+rs.getString(1)+"|\t"+rs.getString(2)+"|\t"+rs.getInt(3));
 							}
+							break;
 					
 					case 5 :	ps=con.prepareStatement("select * from district;");
-							ResultSet rs=ps.executeQuery();
+							rs=ps.executeQuery();
 							while(rs.next()){
 								System.out.println("\t"+rs.getString(1)+"|\t"+rs.getString(2)+"|\t"+rs.getInt(3));
 							}
+							break;
 					
 					case 6 :	b=false;
 					
